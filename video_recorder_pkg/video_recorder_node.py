@@ -14,9 +14,13 @@ class VideoRecorder(Node):
 
         timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
         video_filename = f"recording_{timestamp}.mp4"
-        self.video_filepath = os.path.join(self.recordings_path, video_filename)
 
-        self.video_writer = cv2.VideoWriter('front_camera_view.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 30.0, (640, 480))
+        recordings_dir = '/home/sdc/ros2_ws/src/video_recorder_pkg/recordings'
+
+
+        self.video_filepath = os.path.join(recordings_dir, video_filename)
+
+        self.video_writer = cv2.VideoWriter(self.video_filepath, cv2.VideoWriter_fourcc(*'mp4v'), 25.0, (640, 480))
 
     def image_callback(self, msg):
         frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
